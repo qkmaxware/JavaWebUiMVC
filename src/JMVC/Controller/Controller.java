@@ -33,18 +33,20 @@ public class Controller {
         for(Method method : methods){
             
             //Ignore non-remote methods and methods with wrong output class
-            Remote remote = method.getAnnotation(Remote.class);
+            Endpoint remote = method.getAnnotation(Endpoint.class);
             if(remote != null && Action.class.isAssignableFrom(method.getReturnType())){
-                
+
                 //Make sure enabled, method action name and valid http request types match
                 String actionName = (remote.action() == null || remote.action().isEmpty()) ? method.getName() : remote.action();
                 if(remote.enabled() && actionName.equals(action) && Arrays.asList(remote.types()).contains(request.type)){
-
+                    
                     //Find how many parameters in this method match request params
                     int matches = 0;
                     boolean matchedAll = true;
                     Parameter[] myParams = method.getParameters();
                     Object[] myValues = new Object[myParams.length];
+                    /*
+                    Comparing names doesn't work because by default, reflection can't get the declared name of a variable
                     for(int i = 0; i < myParams.length; i++){
                         Parameter param = myParams[i];
                         String name = param.getName();
@@ -55,6 +57,18 @@ public class Controller {
                             matchedAll = false;
                             break;
                         }
+                    }
+                    */
+                    if(request.parameters.size() >= myParams.length){
+                        matches = myParams.length;
+                        matchedAll = true;
+                        int i = 0;
+                        for(String key : request.parameters.keySet()){
+                            myValues[i] = request.parameters.get(key);
+                            i++;
+                        }
+                    }else{
+                        matchedAll = false;
                     }
                     
                     //If this match is better (more parameters matched) this is the best one

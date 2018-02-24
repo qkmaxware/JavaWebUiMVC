@@ -1,3 +1,5 @@
+package JMVC.Demo;
+
 
 import JMVC.Controller.Actions.Json;
 import JMVC.Controller.Controller;
@@ -17,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author chalseth
  */
-public class Test {
+public class JMVCDemo {
 
     public static void main(String[] args){
 
@@ -25,7 +27,7 @@ public class Test {
         WebServer server = new WebServer(80);
         
         //Create and register controller
-        HomeController HomeController = new HomeController();
+        JMVCDemoController HomeController = new JMVCDemoController();
         server.RegisterController("Home", HomeController);
         
         //Run the server
@@ -34,7 +36,7 @@ public class Test {
                 server.TryOpenBrowser();
             });
         } catch (WebServerException ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JMVCDemo.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

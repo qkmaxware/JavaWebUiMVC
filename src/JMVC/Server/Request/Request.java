@@ -40,6 +40,8 @@ public class Request {
                 String[] keyvaluepairs = params[1].split("\\&");
                 for(String pair : keyvaluepairs){
                     String[] parts = pair.split("\\=");
+                    if(parts.length < 2)
+                        continue;
                     String key = parts[0];
                     String value = parts[1];
                     try{

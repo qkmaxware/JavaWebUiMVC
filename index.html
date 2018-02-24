@@ -11,8 +11,11 @@
 
 function askServer(){
 	$.ajax({
-		url: "<@>Url.ActionUrl('Home','Ask')</@>",
+		url: "<@>Url.ActionUrl('Home','Api')</@>",
 		dataType: "json",
+		data: {
+			request: "apiCall"
+		},
 		success: function(result){
 			console.log(result);
 			var str = result;

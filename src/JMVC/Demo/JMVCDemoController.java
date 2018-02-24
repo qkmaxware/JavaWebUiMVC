@@ -1,8 +1,9 @@
+package JMVC.Demo;
+
 
 import JMVC.Controller.Actions.Action;
 import JMVC.Controller.Actions.Json;
 import JMVC.Controller.Controller;
-import JMVC.Server.Request.Remote;
 import JMVC.Server.Request.Request;
 import JMVC.Server.Request.RequestType;
 import JMVC.View.Bags.ViewBag;
@@ -11,6 +12,7 @@ import JMVC.View.View;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import JMVC.Server.Request.Endpoint;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,7 +24,7 @@ import java.util.Arrays;
  *
  * @author chalseth
  */
-public class HomeController extends Controller{
+public class JMVCDemoController extends Controller{
     
     Template _layoutBase = new Template(new File("_layout.html"));
     Template _layoutMain = new Template(new File("_layoutMain.html"));
@@ -34,7 +36,7 @@ public class HomeController extends Controller{
         public boolean success = false;
     }
     
-    public HomeController(){
+    public JMVCDemoController(){
         loginTemplate.SetParent(_layoutBase);
         indexTemplate.SetParent(_layoutMain);
         
@@ -42,7 +44,7 @@ public class HomeController extends Controller{
         
     }
     
-    @Remote()
+    @Endpoint()
     public Action Index(){
         ViewBag traits = new ViewBag();
         
@@ -51,15 +53,15 @@ public class HomeController extends Controller{
         return new View(indexTemplate, traits);
     }
 
-    @Remote(
+    @Endpoint(
         types = {
             RequestType.GET, 
             RequestType.POST
         }
     )
-    public Action Ask(Request request){
+    public Action Api(String request){
         LoginResponse res = new LoginResponse();
-        res.token = "Hello";
+        res.token = "Hello "+request;
         res.success = true;
         return new Json(res.token);
     }

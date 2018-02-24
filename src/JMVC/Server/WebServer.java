@@ -55,11 +55,9 @@ public class WebServer {
                 return a;
             }
             catch(InvocationTargetException ex){
-                ex.printStackTrace();
-               ServerLogger.Log(Level.WARNING, ex.getCause());
+                ServerLogger.Log(Level.WARNING, ex.getCause());
             }
             catch(Exception e){
-                e.printStackTrace();
                 ServerLogger.Log(Level.WARNING, e);
             }
         }

@@ -45,7 +45,7 @@ public class ServerClient extends Thread{
             if(!req.isValid()){
                 throw new Exception("The request is in an invalid format");
             }
-            
+
             //Invoke 
             Action result = spawner.InvokeRequest(req);
             if(result != null){
@@ -55,7 +55,10 @@ public class ServerClient extends Thread{
             
             out.close();
             in.close();
+            
+            ServerLogger.Log("Recieved Resolved - " + sin);
         }catch(Exception e){
+            e.printStackTrace();
             ServerLogger.Log(Level.WARNING, "Client processing error - "+e.toString());
         }
         finally{

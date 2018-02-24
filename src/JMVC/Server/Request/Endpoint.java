@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Remote {
+public @interface Endpoint {
     public String action() default "";
     public RequestType[] types() default {RequestType.GET};
     public boolean enabled() default true;
