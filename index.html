@@ -1,0 +1,24 @@
+
+<button type="button", onClick="askServer();">
+	Ask me
+</button>
+
+<@>
+	Html.DropDownFor("Values", View.get("names"));
+</@>
+
+<script>
+
+function askServer(){
+	$.ajax({
+		url: "<@>Url.ActionUrl('Home','Ask')</@>",
+		dataType: "json",
+		success: function(result){
+			console.log(result);
+			var str = result;
+			alert("Result: "+str);
+		}
+	});
+}
+
+</script>
