@@ -16,5 +16,6 @@ public @interface Endpoint {
     public String action() default "";
     public RequestType[] types() default {RequestType.GET};
     public boolean enabled() default true;
+    public Map[] map() default {};
 }
  

@@ -44,32 +44,29 @@ public class Controller {
                     int matches = 0;
                     boolean matchedAll = true;
                     Parameter[] myParams = method.getParameters();
+                    
                     Object[] myValues = new Object[myParams.length];
-                    /*
-                    Comparing names doesn't work because by default, reflection can't get the declared name of a variable
-                    for(int i = 0; i < myParams.length; i++){
-                        Parameter param = myParams[i];
-                        String name = param.getName();
-                        if(request.parameters.containsKey(name)){
-                            matches ++;
-                            myValues[i] = request.parameters.get(name);
-                        }else{
-                            matchedAll = false;
-                            break;
+                    
+                    for(Map map : remote.map()){
+                        if(request.parameters.containsKey(map.name())){
+                            int idx = map.index();
+                            if(idx >= 0 && idx < myValues.length)
+                                myValues[map.index()] = request.parameters.get(map.name());
                         }
                     }
-                    */
-                    if(request.parameters.size() >= myParams.length){
-                        matches = myParams.length;
-                        matchedAll = true;
-                        int i = 0;
-                        for(String key : request.parameters.keySet()){
-                            myValues[i] = request.parameters.get(key);
-                            i++;
+                    
+                    int k = 0; int matched = 0;
+                    for(String key : request.parameters.keySet()){
+                        if(k < myValues.length){
+                            if(myValues[k] == null){
+                                myValues[k] = request.parameters.get(key);   
+                            }
                         }
-                    }else{
-                        matchedAll = false;
+                        matched ++;
+                        k++;
                     }
+                    
+                    matchedAll = request.parameters.size() >= myValues.length;
                     
                     //If this match is better (more parameters matched) this is the best one
                     if(matchedAll && matches > matchedParameters){

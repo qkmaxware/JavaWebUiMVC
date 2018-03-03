@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import JMVC.Server.Request.Endpoint;
+import JMVC.Server.Request.Map;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -57,6 +58,9 @@ public class JMVCDemoController extends Controller{
         types = {
             RequestType.GET, 
             RequestType.POST
+        },
+        map = {
+            @Map(name = "request", index = 0)
         }
     )
     public Action Api(String request){
